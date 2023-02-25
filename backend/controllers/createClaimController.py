@@ -42,11 +42,8 @@ def createClaim():
         print("new element", newClaim)
         db.session.add(newClaim)
 
-
-
         db.session.commit() 
 
-                    
         return jsonify({
             "data": f"New claim has been created successfully"
         }), 201   
