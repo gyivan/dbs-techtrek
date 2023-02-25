@@ -4,32 +4,33 @@ import Nav from 'react-bootstrap/Nav'
 import { LinkContainer } from 'react-router-bootstrap'
 
 const NavBar = () => {
+    const handleLogout = (e) => {
+      e.preventDefault()
+      window.localStorage.removeItem("token")
+    }
 
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Container>
-            <LinkContainer to="/">
-                <Navbar.Brand>React-Bootstrap</Navbar.Brand>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>Insurance Inc.</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              <LinkContainer to="/view-accounts">
+                <Nav.Link>Manage Insurance Policies</Nav.Link>
+              </LinkContainer>
+            </Nav>
+            <Nav>
+            <LinkContainer to="/" onClick={handleLogout}>
+              <Nav.Link>Log Out</Nav.Link>
             </LinkContainer>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav style={{margin: "0 auto"}}>
-                <LinkContainer to="/shop">
-                    <Nav.Link>Shop</Nav.Link>
-                </LinkContainer>
-              </Nav>
-              <Nav>
-                <LinkContainer to="/cart">
-                    <Nav.Link>Cart</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                    <Nav.Link>Logout</Nav.Link>
-                </LinkContainer>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      );
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+  );
 }
 
 
