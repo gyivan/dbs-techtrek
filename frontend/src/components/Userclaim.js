@@ -1,6 +1,6 @@
 import React from 'react'
-import { format } from 'date-fns'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+// import { format } from 'date-fns'
+// import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { Link } from 'react-router-dom'
 
 function Userclaim({user}) {
@@ -10,10 +10,10 @@ function Userclaim({user}) {
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>FirstName:</span>{user.FirstName}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>LastName:</span>{user.LastName}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>UserAmount:</span>${user.Amount}</p>
-            <p><span style={{fontWeight:600, paddingRight:"5px"}}>ExpenseDate:</span>{format(new Date(user.ExpenseDate), 'dd/MM/yyyy')}</p>
+            {/* <p><span style={{fontWeight:600, paddingRight:"5px"}}>ExpenseDate:</span>{format(new Date(user.ExpenseDate), 'dd/MM/yyyy')}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>Purpose:</span>{user.Purpose}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>FollowUp:</span>{user.FollowUp}</p>
-            <p><span style={{fontWeight:600, paddingRight:"5px"}}>Last Update:</span>{formatDistanceToNow(new Date(user.LastEditedClaimDate), {addSuffix: true})}</p>
+            <p><span style={{fontWeight:600, paddingRight:"5px"}}>Last Update:</span>{formatDistanceToNow(new Date(user.LastEditedClaimDate), {addSuffix: true})}</p> */}
         </div>
         <Link to="/edit-claim/:id" className="btn btn-primary">Edit</Link>
   

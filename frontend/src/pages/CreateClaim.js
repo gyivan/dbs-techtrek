@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, useEffect} from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -9,14 +9,34 @@ import axios from "axios";
 import moment from "moment";
 
 const CreateClaim = () => {
+
+
+    const [firstName, setFirstName] = useState(null)
+    const [lastName, setLastName] = useState(null)
+
+
+
+    useEffect (() => {
+        const token = window.localStorage.getItem('token')
+        function parseJwt(token) {
+            if (!token) {
+              return;
+            }
+            const base64Url = token.split(".")[1];
+            const base64 = base64Url.replace("-", "+").replace("_", "/");
+            return JSON.parse(window.atob(base64));
+          }
+          const {name, lastname} = parseJwt(token)
+          setFirstName(name)
+          setLastName(lastname)
+        }, [])
+
     
     const [alertMsg, setAlertMsg] = useState(null);
     const [variant, setVariant] = useState(null);
 
 
     const token = window.localStorage.getItem('token')
-    const FirstName = "Mary"
-    const LastName = "Ong"
     const {id} = useParams()
 
     const handleSubmit = async (e) => {
@@ -76,7 +96,7 @@ const CreateClaim = () => {
                             <Form.Group className="mb-3">
                                 <Form.Label>First Name</Form.Label>
                                 <Form.Control 
-                                    value={FirstName}
+                                    value={firstName}
                                     name="FirstName"
                                     type="text" 
                                     disabled
@@ -87,7 +107,7 @@ const CreateClaim = () => {
                         <Form.Group className="mb-3">
                                 <Form.Label>Last Name</Form.Label>
                                 <Form.Control 
-                                    value={LastName}
+                                    value={lastName}
                                     name="LastName"
                                     type="text" 
                                     disabled
