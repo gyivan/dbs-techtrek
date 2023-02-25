@@ -49,7 +49,7 @@ def login():
             ), 404
 
         additional_claims = {"id": existingUser.EmployeeID,
-                            "name": existingUser.FirstName, "lastname": existingUser.LastName}
+                            "firstname": existingUser.FirstName, "lastname": existingUser.LastName}
         
         print(additional_claims)
 
@@ -69,6 +69,7 @@ def login():
                 "message": e
             }
         ), 500
+    
 
 def protected():
     try:
