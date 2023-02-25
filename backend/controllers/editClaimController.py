@@ -27,7 +27,7 @@ def editClaim():
                     "code":404,
                     "message":"No token in request"
                 }
-            )
+            ),404
 
         claim = InsuranceClaim.query.filter( InsuranceClaim.ClaimID==claimID ).first();
         print(claim)
