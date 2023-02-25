@@ -9,8 +9,6 @@ function Userclaim({user}) {
         <div style={{margin:"30px 0"}} className="user-profile">
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>FirstName:</span>{user.FirstName}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>LastName:</span>{user.LastName}</p>
-        </div>
-        <div className="user-purpose">
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>UserAmount:</span>${user.Amount}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>ExpenseDate:</span>{format(new Date(user.ExpenseDate), 'dd/MM/yyyy')}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>Purpose:</span>{user.Purpose}</p>
