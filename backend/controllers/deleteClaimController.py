@@ -3,6 +3,7 @@ from utils.dbConfig import db
 from models.db_models import InsuranceClaim
 from sqlalchemy.orm import joinedload
 
+
 def deleteClaimById(claimID):
 
     try:
