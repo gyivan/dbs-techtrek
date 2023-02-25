@@ -145,7 +145,7 @@ def getRejectedClaims():
 #(only for pending claims) 
 
 #updateClaim 
-@app.route("/updateClaim", methods = ['GET', 'POST'])
+@app.route("/updateClaim", methods = ['GET', 'POST', 'PUT'])
 def updateClaim():
     response = make_response('')
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -153,7 +153,7 @@ def updateClaim():
 
 
 #deleteClaim
-@app.route("/deleteClaim", methods = ['GET', 'POST'])
+@app.route("/deleteClaim", methods = ['GET', 'POST', 'DELETE'])
 def deleteClaim():
     response = make_response('')
     response.headers.add('Access-Control-Allow-Origin', '*')
