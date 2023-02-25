@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
 
 const CreateClaim = () => {
     
@@ -12,23 +14,12 @@ const CreateClaim = () => {
     const [variant, setVariant] = useState(null);
 
 
+    const token = window.localStorage.getItem('token')
     const FirstName = window.localStorage.getItem('FirstName')
     const LastName = window.localStorage.getItem('LastName')
     const {id} = useParams()
 
-    // ClaimID
-    // InsurancelD
-    // FirstName
-    // LastName
-    // ExpenseDate
-    // Amount
-    // Purpose
-    // FollowUp
-    // PreviousClaimID
-    // Status
-    // LastEditedClaimDate
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault()
 
@@ -39,9 +30,19 @@ const CreateClaim = () => {
         const Amount = e.target.elements.Amount.value
         const Purpose = e.target.elements.Purpose.value
         const FollowUp = e.target.elements.FollowUp.value
-        
-        console.log(InsuranceID, FirstName, LastName, typeof ExpenseDate, Amount, Purpose, FollowUp)
+        const newDate = moment(ExpenseDate).toISOString();
 
+        const newClaim = {token, InsuranceID, FirstName, LastName, Amount, Purpose, FollowUp, newDate}
+        try {
+            await axios.post('http://localhost:5000/api/claims', newClaim)
+            setVariant("success")
+            setAlertMsg("Claim Submitted")
+        } catch (error) {
+            setVariant("danger")
+            setAlertMsg("Error Submitting Claim")
+        }
+
+        e.target.reset()
     }
 
     return (
