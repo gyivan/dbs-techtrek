@@ -15,8 +15,8 @@ const CreateClaim = () => {
 
 
     const token = window.localStorage.getItem('token')
-    const FirstName = window.localStorage.getItem('FirstName')
-    const LastName = window.localStorage.getItem('LastName')
+    const FirstName = "Mary"
+    const LastName = "Ong"
     const {id} = useParams()
 
     const handleSubmit = async (e) => {
@@ -26,15 +26,16 @@ const CreateClaim = () => {
         const InsuranceID = e.target.elements.InsuranceID.value
         const FirstName = e.target.elements.FirstName.value
         const LastName = e.target.elements.LastName.value
-        const ExpenseDate = e.target.elements.ExpenseDate.value
+        let ExpenseDate = e.target.elements.ExpenseDate.value
         const Amount = e.target.elements.Amount.value
         const Purpose = e.target.elements.Purpose.value
         const FollowUp = e.target.elements.FollowUp.value === "y" ? true : false
-        const newDate = moment(ExpenseDate).toISOString();
+        ExpenseDate = moment(ExpenseDate).toISOString();
 
-        const newClaim = {token, InsuranceID, FirstName, LastName, Amount, Purpose, FollowUp, newDate}
+        const newClaim = {token, InsuranceID, FirstName, LastName, Amount, Purpose, FollowUp, ExpenseDate}
         try {
-            await axios.post('http://localhost:5000/api/claims', newClaim)
+            console.log(token)
+            await axios.post('http://localhost:5000/createClaim/user', newClaim)
             
             setVariant("success")
             setAlertMsg("Claim Submitted")
@@ -43,6 +44,7 @@ const CreateClaim = () => {
             }, 3000)
 
         } catch (error) {
+            console.log(error)
             setVariant("danger")
             setAlertMsg("Error Submitting Claim")
             setTimeout(() => {
