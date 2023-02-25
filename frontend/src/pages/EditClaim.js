@@ -1,13 +1,18 @@
 import { React, useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 
 export default function EditClaim() {
 	const navigate = useNavigate();
 	const [convertedDate, setConvertedDate] = useState("");
 	const [convertedEditDate, setConvertedEditDate] = useState();
+
+	const [alertMsg, setAlertMessage] = useState(null);
+	const [variant, setVariant] = useState(null);
+
+	const { id } = useParams();
 
 	const claim = {
 		ClaimID: 2010,
@@ -23,7 +28,7 @@ export default function EditClaim() {
 		LastEditedClaimDate: "2022-07-15T12:22:45+08:00",
 	};
 
-	const onUpdate = (e) => {
+	const onUpdate = async (e) => {
 		e.preventDefault();
 		const newAmount = e.target.elements.amount.value;
 		const newPurpose = e.target.elements.purpose.value;
@@ -46,6 +51,21 @@ export default function EditClaim() {
 
 		console.log("newClaim", newClaim);
 		// call api call
+		await axios.put("http://localhost:5000/edit-claim", newClaim).then((res) => {
+			if (res.status === 201) {
+				setVariant("success");
+				setAlertMessage("Claim successfully edited!");
+				setTimeout(() => {
+					setAlertMessage(null);
+				}, 3000);
+			} else {
+				setVariant("danger");
+				setAlertMessage("Error editing claim. Try Again!");
+				setTimeout(() => {
+					setAlertMessage(null);
+				}, 3000);
+			}
+		});
 	};
 
 	const onBack = () => {
@@ -230,6 +250,7 @@ export default function EditClaim() {
 							</Row>
 						</Form.Group>
 					</Form>
+					{alertMsg !== null ? <Alert variant={variant}>{alertMsg}</Alert> : ""}
 				</Container>
 			</div>
 		</div>
