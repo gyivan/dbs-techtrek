@@ -1,38 +1,25 @@
-import "./App.css";
-import { Route, Routes, useLocation, BrowserRouter } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Test from "./pages/Test"
-import Header from "./components/Header";
-// import AuthContextProvider from "./contexts/authContext";
-// import Transaction from "./pages/Transaction";
+import ProtectedRoutes from './utils/ProtectedRoutes';
+import Layout from './layout/Layout';
+import Login from './pages/Login';
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom';
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/Login" element={<Login/>}/>
+      <Route element={<ProtectedRoutes/>}>
+        <Route path="/" element={<Layout/>}>
+          <Route path="/" element={<div>Home</div>}/>
+        </Route>
+      </Route>
+    </Route>
+  )  
+)
+
 function App() {
-
-    const [theme, setTheme] = useState(false);
-
-    const location = useLocation();
-
-    // useEffect(() => {    
-    //     if (window.location.pathname === "/login"){
-    //     setTheme(true);
-    //   } else{
-    //     setTheme(false);
-    //   }
-    // }, [location.pathname]);
-
-    return (
-        // <AuthContextProvider>
-            <div className={`App ${theme ? 'background-image' : 'background-lightBlue'}`} style={{ minHeight: "100vh" }}>
-                <Header />                    
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/test" element={<Test />} />
-                </Routes>
-            </div>
-        // </AuthContextProvider> 
-    );
+  return (
+    <RouterProvider router={router}/>
+  );
 }
 
 export default App;
