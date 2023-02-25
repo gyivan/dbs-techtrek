@@ -1,79 +1,46 @@
 
 from utils.dbConfig import db; 
 
-class Currency(db.Model):
-    __tablename__ = 'currency'
+class InsuranceClaim(db.Model):
+    __tablename__ = 'InsuranceClaims'
 
-    id = db.Column(db.Integer, primary_key=True)
-    wallet_id = db.Column(db.ForeignKey('wallet.id'), nullable=False, index=True)
-    currency = db.Column(db.String(3), nullable=False)
-    amount = db.Column(db.Float, nullable=False)
+    ClaimID = db.Column(db.Integer, primary_key=True)
+    InsuranceID = db.Column(db.ForeignKey('InsurancePolicies.InsuranceID', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    FirstName = db.Column(db.String(50), nullable=False)
+    LastName = db.Column(db.String(50), nullable=False)
+    ExpenseDate = db.Column(db.String(255), nullable=False)
+    Amount = db.Column(db.Float, nullable=False)
+    Purpose = db.Column(db.String(255), nullable=False)
+    FollowUp = db.Column(db.BIT(1), nullable=False)
+    PreviousClaimID = db.Column(db.Integer)
+    Status = db.Column(db.String(20), nullable=False)
+    LastEditedClaimDate = db.Column(db.String(255), nullable=False)
 
-    wallet = db.relationship('Wallet', primaryjoin='Currency.wallet_id == Wallet.id', backref='currencies')
-
-    def json(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-class ExchangeRate(db.Model):
-    __tablename__ = 'exchange_rate'
-
-    id = db.Column(db.Integer, primary_key=True)
-    base_currency = db.Column(db.String(3), nullable=False)
-    exchange_currency = db.Column(db.String(3), nullable=False)
-    rate = db.Column(db.Float, nullable=False)
-
-    def json(self):
-        return {"id": self.id, "base_currency": self.base_currency, "exchange_currency": self.exchange_currency, "rate": self.rate}
-    
-    def as_dict(self):
-       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    InsurancePolicy = db.relationship('InsurancePolicy', primaryjoin='InsuranceClaim.InsuranceID == InsurancePolicy.InsuranceID', backref='insurance_claims')
 
 
-class Transaction(db.Model):
-    __tablename__ = 'transaction'
 
-    id = db.Column(db.Integer, primary_key=True)
-    wallet_id = db.Column(db.ForeignKey('wallet.id'), nullable=False, index=True)
-    debit_id = db.Column(db.ForeignKey('currency.id'), nullable=False, index=True)
-    debit_currency = db.Column(db.String(3), nullable=False)
-    debit_amount = db.Column(db.Float, nullable=False)
-    credit_id = db.Column(db.ForeignKey('currency.id'), nullable=False, index=True)
-    credit_currency = db.Column(db.String(3), nullable=False)
-    credit_amount = db.Column(db.Float, nullable=False)
-    description = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, server_default=db.FetchedValue())
-    created_by = db.Column(db.String(50))
-    updated_at = db.Column(db.DateTime, server_default=db.FetchedValue())
-    updated_by = db.Column(db.String(50))
+class InsurancePolicy(db.Model):
+    __tablename__ = 'InsurancePolicies'
 
-    credit = db.relationship('Currency', primaryjoin='Transaction.credit_id == Currency.id', backref='currency_transactions')
-    debit = db.relationship('Currency', primaryjoin='Transaction.debit_id == Currency.id', backref='currency_transactions_0')
-    wallet = db.relationship('Wallet', primaryjoin='Transaction.wallet_id == Wallet.id', backref='transactions')
+    InsuranceID = db.Column(db.Integer, primary_key=True)
+    EmployeeID = db.Column(db.ForeignKey('User.EmployeeID', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    InsuranceType = db.Column(db.String(100), nullable=False)
+    PolicyStartDate = db.Column(db.String(255), nullable=False)
+    PolicyTerm = db.Column(db.String(100), nullable=False)
+    PolicyEndDate = db.Column(db.String(255), nullable=False)
+    ClaimLimit = db.Column(db.Float, nullable=False)
+    RemainingClaimLimit = db.Column(db.Float, nullable=False)
 
-    def json(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    User = db.relationship('User', primaryjoin='InsurancePolicy.EmployeeID == User.EmployeeID', backref='insurance_policies')
 
 
 
 class User(db.Model):
-    __tablename__ = 'user'
+    __tablename__ = 'User'
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(50), nullable=False)
-    name = db.Column(db.String(50), nullable=False)
-
-    def json(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-class Wallet(db.Model):
-    __tablename__ = 'wallet'
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    name = db.Column(db.String(50), nullable=False)
-
-    def json(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    EmployeeID = db.Column(db.Integer, primary_key=True)
+    Password = db.Column(db.String(20), nullable=False)
+    FirstName = db.Column(db.String(50), nullable=False)
+    LastName = db.Column(db.String(50), nullable=False)
+    Age = db.Column(db.Integer, nullable=False)
