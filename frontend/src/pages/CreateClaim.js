@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState} from "react";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -29,17 +29,25 @@ const CreateClaim = () => {
         const ExpenseDate = e.target.elements.ExpenseDate.value
         const Amount = e.target.elements.Amount.value
         const Purpose = e.target.elements.Purpose.value
-        const FollowUp = e.target.elements.FollowUp.value
+        const FollowUp = e.target.elements.FollowUp.value === "y" ? true : false
         const newDate = moment(ExpenseDate).toISOString();
 
         const newClaim = {token, InsuranceID, FirstName, LastName, Amount, Purpose, FollowUp, newDate}
         try {
             await axios.post('http://localhost:5000/api/claims', newClaim)
+            
             setVariant("success")
             setAlertMsg("Claim Submitted")
+            setTimeout(() => {
+                setAlertMsg(null)
+            }, 3000)
+
         } catch (error) {
             setVariant("danger")
             setAlertMsg("Error Submitting Claim")
+            setTimeout(() => {
+                setAlertMsg(null)
+            }, 3000)
         }
 
         e.target.reset()
@@ -47,10 +55,11 @@ const CreateClaim = () => {
 
     return (
         <Container fluid="md" style={{width: "50%", marginTop: "2rem"}}>
-            {alertMsg !== null ? <Alert variant={variant}>{alertMsg}</Alert> : ""}
+           
             <Card style={{width: "32rem", padding: "0", boxShadow: "none", transform: "none"}}>
                 <Card.Header>Submit a Claim </Card.Header>
                 <Card.Body>
+                    {alertMsg !== null ? <Alert variant={variant}>{alertMsg}</Alert> : ""}
                     <Form style={{display: "flex", flexDirection: "column"}} onSubmit={handleSubmit}>
                         <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
                             <Form.Group className="mb-3">
@@ -116,7 +125,7 @@ const CreateClaim = () => {
                                         label="No"
                                         name="FollowUp"
                                         type="radio"
-                                        id="n"
+                                        value="n"
                                     />
                                 </div>
                             </Form.Group>
