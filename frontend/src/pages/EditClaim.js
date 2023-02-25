@@ -1,11 +1,12 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import DateTimePicker from "react-datetime-picker";
+import moment from "moment";
 
 export default function EditClaim() {
 	const navigate = useNavigate();
+	const [convertedDate, setConvertedDate] = useState("");
 
 	const claim = {
 		ClaimID: 2010,
@@ -26,12 +27,14 @@ export default function EditClaim() {
 		const newAmount = e.target.elements.amount.value;
 		const newPurpose = e.target.elements.purpose.value;
 
+		const newDate = moment(convertedDate).toISOString();
+
 		const newClaim = {
 			ClaimID: claim.ClaimID,
 			InsuranceID: claim.InsuranceID,
 			FirstName: claim.FirstName,
 			LastName: claim.LastName,
-			ExpenseDate: claim.ExpenseDate,
+			ExpenseDate: newDate,
 			Amount: newAmount,
 			Purpose: newPurpose,
 			FollowUp: claim.FollowUp,
@@ -48,6 +51,14 @@ export default function EditClaim() {
 		navigate(-1);
 	};
 
+	const onDateChange = (e) => {
+		console.log(e.target.value);
+		setConvertedDate(e.target.value);
+	};
+
+	useEffect(() => {
+		setConvertedDate(moment(claim.ExpenseDate).utc().format("YYYY-MM-DD"));
+	}, []);
 	return (
 		<div style={{}}>
 			<h1 style={{ margin: 10 }}>Edit Claim</h1>
@@ -112,13 +123,20 @@ export default function EditClaim() {
 							<Row>
 								<Col>
 									<Form.Group className="m-1">
-										<Form.Label>Expense Date</Form.Label>
-										<Form.Control
-											type="text"
+										<div style={{ display: "flex", flexDirection: "column" }}>
+											<Form.Label>Expense Date</Form.Label>
+											<input
+												type="date"
+												value={convertedDate}
+												onChange={onDateChange}
+											></input>
+											{/* <Form.Control
+											type="date"
 											defaultValue={claim.ExpenseDate}
 											disabled
 											readOnly
-										/>
+										/> */}
+										</div>
 									</Form.Group>
 								</Col>
 
