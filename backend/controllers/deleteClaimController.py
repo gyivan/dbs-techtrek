@@ -2,14 +2,21 @@ from flask import Flask, request, jsonify
 from utils.dbConfig import db
 from models.db_models import InsuranceClaim
 from sqlalchemy.orm import joinedload
-from flask_jwt_extended import jwt_required
+# from flask_jwt_extended import jwt_required
  
-@jwt_required()
-def deleteClaimById(claimID):
-
+ 
+# @jwt_required()
+def deleteClaim(claimID):
+    print('test')
     try:
         #delete claim
-        InsuranceClaim.query.filter(InsuranceClaim.ClaimID == claimID).delete()
+        print('enter try')
+        # reqObj = request.get_json()
+        # print(reqObj)
+        # claimID = reqObj["claimID"]
+        print(claimID)
+
+        InsuranceClaim.query.filter_by(ClaimID = claimID).delete()
 
         db.session.commit()
 

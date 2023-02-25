@@ -1,9 +1,9 @@
 from flask import Blueprint; 
 
-from controllers.deleteClaimController import deleteClaimById; 
+from controllers.deleteClaimController import deleteClaim; 
 
 
 deleteClaimRoute = Blueprint('delete_claim', __name__)
 
 
-deleteClaimRoute.route('/deleteClaim/<int:claimID>', strict_slashes=False, methods=['DELETE'])(deleteClaimById)
+deleteClaimRoute.route('/user/<int:claimID>', strict_slashes=False, methods=['POST', 'DELETE'])(deleteClaim)

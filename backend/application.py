@@ -8,6 +8,7 @@ import os;
 from routes.authRoute import authRoute; 
 from routes.editClaimRoute import editClaimRoute; 
 from routes.createClaimRoute import createClaimRoute; 
+from routes.deleteClaimRoute import deleteClaimRoute;
 
 # <REMOVE THE WHEN USING THIS AS A TEMPLATE>---------------------------------------------------------
 # from routes.exchangeRateRoute import exchangeRateRoute; 
@@ -41,6 +42,7 @@ def healthCheck():
 application.register_blueprint(authRoute, url_prefix='/auth')
 application.register_blueprint(editClaimRoute, url_prefix='/')
 application.register_blueprint(createClaimRoute, url_prefix='/createClaim')
+application.register_blueprint(deleteClaimRoute, url_prefix='/deleteClaim')
 
 # <REMOVE THE WHEN USING THIS AS A TEMPLATE>----------------------------------------------------------------------
 # application.register_blueprint(exchangeRateRoute, url_prefix='/exchange_rate')
