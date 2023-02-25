@@ -1,25 +1,4 @@
-import React, { useState} from "react";
-import { Table } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'
-
-// const InsurancePolicy = () => {
-//   const [insuranceData, setInsuranceData] = useState([]);
-
-// }
-
-
-//   useEffect(() => {  
-//     fetch("InsurancePolicies.json")
-//       .then((res) => res.json())
-//       .then((data) => {
-//         setInsuranceData(data);
-//       });
-
-//   }, []);
-
-
-
-  const policies = [
+[
     {
      "InsuranceID": 1005,
      "EmployeeID": 58001002,
@@ -141,58 +120,3 @@ import { useNavigate } from 'react-router-dom'
      "RemainingClaimLimit": 900.00
     }
 ]
-
-
-
-
- 
-
-
-
-const InsurancePolicies = () => {
-
-    const [InsID, setInsID] = useState(null)
-
-    
-    const Navigate = useNavigate()
-    
-    const handleClick = (data) => Navigate(`/${data.InsuranceID}`);        
-
-    return (
-        <div className="container">
-        <h1>Insurance Policies</h1>
-        <Table bordered hover>
-            <thead>
-            <tr>
-                <th>Insurance ID</th>
-                <th>Employee ID</th>
-                <th>Insurance Type</th>
-                <th>Policy Start Date</th>
-                <th>Policy Term</th>
-                <th>Policy End Date</th>
-                <th>Claim Limit</th>
-                <th>Remaining Claim Limit</th>
-            </tr>
-            </thead>
-            <tbody>
-            {policies.map((data) => (
-
-                <tr key={data.InsuranceID}>
-                <td>{data.InsuranceID}</td>
-                <td>{data.EmployeeID}</td>
-                <td>{data["Insurance Type"]}</td>
-                <td>{data.PolicyStartDate}</td>
-                <td>{data.PolicyTerm}</td>
-                <td>{data.PolicyEndDate}</td>
-                <td>{data.ClaimLimit}</td>
-                <td>{data.RemainingClaimLimit}</td>
-                <button onClick = {() => handleClick(data)}>Claim under {data.InsuranceID}</button>
-                </tr>
-            ))}
-            </tbody>
-        </Table>
-        </div>
-    );
-};
-
-export default InsurancePolicies;
