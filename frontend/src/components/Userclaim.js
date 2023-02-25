@@ -1,5 +1,4 @@
 import React from 'react'
-import "../styles/Userclaim.css"
 
 function Userclaim({user}) {
   return (
@@ -12,7 +11,7 @@ function Userclaim({user}) {
             <p>UserAmount: ${user.Amount}</p>
             <p>Purpose: {user.Purpose}</p>
             <p>FollowUp: {user.FollowUp}</p>
-            <p>FollowUp: {user.LastEditedClaimDate}</p>
+            <p>Last Update: {user.LastEditedClaimDate}</p>
         </div>
     </div>
 

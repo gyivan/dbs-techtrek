@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import Nav from 'react-bootstrap/Nav';
 import Userclaim from '../components/Userclaim'
+import { Tab, Tabs } from 'react-bootstrap'
 
 function Claims() {
     const [user,setUser] = useState({
         ClaimID: 2010,
         InsuranceID: 1009,
-        FirstName: "Martin",
+        FirstName: "John",
         LastName: "Ong",
         ExpenseDate: "2022-07-14T08:00:00+08:00",
         Amount: 100.00,
@@ -15,27 +17,36 @@ function Claims() {
         Status: "Approved",
         LastEditedClaimDate: "2022-07-15T12:22:45+08:00"
        })
+    //    useEffect(()=>{
+    //     const getClaims = async ()=>{
+    //       const response = await fetch("")
+    //       const json = await response.json()
+    
+    //       if(response.ok){
+          
+    
+    //       }
+    
+    //     }
+    //     getClaims()
+    //   },[])
+    const [tabKey, initTabKey] = useState('one')
   return (
     <div>
-        <nav>
-        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-            <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Pending</button>
-            <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Approved</button>
-            <button className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Rejected</button>
-        </div>
-        </nav>
-        <div className="tab-content" id="nav-tabContent">
-        <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            {user.Status === "Approved" && <Userclaim user={user} /> }
-        </div>
-        <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-            {user.Status === "Pending" && <Userclaim user={user} /> }
-        </div>
-        <div className="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-            {user.Status === "Rejected" && <Userclaim user={user} /> }
-        </div>
-        </div>
-    </div>
+    <h2 className="mb-3">React Js Tabs Component Example</h2>
+    <Tabs activeKey={tabKey} onSelect={(e) => initTabKey(e)}>
+      <Tab eventKey="one" title="Pending">
+        <p>{user.Status === "Pending" && <Userclaim user={user} /> }</p>
+      </Tab>
+      <Tab eventKey="two" title="Approved">
+        <p>{user.Status === "Approved" && <Userclaim user={user} /> }</p>
+      </Tab>
+      <Tab eventKey="four" title="Rejected">
+        <p>{user.Status === "Rejected" && <Userclaim user={user} /> }</p>
+      </Tab>
+    </Tabs>
+  </div>
+
   )
 }
 

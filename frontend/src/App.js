@@ -8,6 +8,7 @@ import {
 	RouterProvider,
 } from "react-router-dom";
 import EditClaim from "./pages/EditClaim";
+import Claims from "./pages/Claims";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -16,6 +17,7 @@ const router = createBrowserRouter(
 			<Route element={<ProtectedRoutes />}>
 				<Route path="/" element={<Layout />}>
 					<Route path="/" element={<div>Home</div>} />
+                    <Route path="/claim" element={<Claims />} />
 					<Route path="/edit-claim/:id" element={<EditClaim />} />
 				</Route>
 			</Route>
