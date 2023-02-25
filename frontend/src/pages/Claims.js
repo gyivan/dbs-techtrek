@@ -33,7 +33,7 @@ function Claims() {
     const [tabKey, initTabKey] = useState('one')
   return (
     <div>
-    <h2 className="mb-3">React Js Tabs Component Example</h2>
+    <h2 className="mb-3">My claims</h2>
     <Tabs activeKey={tabKey} onSelect={(e) => initTabKey(e)}>
       <Tab eventKey="one" title="Pending">
         <p>{user.Status === "Pending" && <Userclaim user={user} /> }</p>
