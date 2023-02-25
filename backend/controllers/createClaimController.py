@@ -4,6 +4,7 @@ from utils.dbConfig import db
 from models.db_models import InsuranceClaim, InsurancePolicy, User
 from flask_jwt_extended import decode_token
 import json
+import datetime
 
 
 
@@ -27,7 +28,7 @@ def createClaim():
         FollowUp = reqObj["FollowUp"]
         PreviousClaimID = None
         Status = "pending"
-        LastEditedClaimDate = reqObj["LastEditedClaimDate"]
+        # LastEditedClaimDate = reqObj["LastEditedClaimDate"]
 
 
         # query for the claimID
@@ -37,7 +38,7 @@ def createClaim():
         newClaim = InsuranceClaim(ClaimID = claimID, InsuranceID= insuranceID , FirstName= FirstName,
                                 LastName = LastName, ExpenseDate = ExpenseDate, Amount= Amount, Purpose=Purpose,
                                 FollowUp = FollowUp, PreviousClaimID = PreviousClaimID, Status = Status, 
-                                LastEditedClaimDate = LastEditedClaimDate)
+                                LastEditedClaimDate = datetime.datetime.now())
         print("test")
         print("new element", newClaim)
         db.session.add(newClaim)
@@ -52,10 +53,10 @@ def createClaim():
         }), 201   
 
 
-    except:
+    except Exception as e:
         return jsonify(
             {
-                "data": "Server error"
+                "data": e
             }
         ), 500
 
