@@ -1,11 +1,9 @@
-import {useEffect, useState} from 'react'
-import {Outlet, Navigate} from 'react-router-dom'
-import axios from 'axios'
+import { useEffect, useState } from "react";
+import { Outlet, Navigate } from "react-router-dom";
+import axios from "axios";
 
 const ProtectedRoutes = () => {
-
-    const [successAuth, setSuccessAuth] = useState(null)
-
+	const [successAuth, setSuccessAuth] = useState(null);
     useEffect(() => {
         
         const authUser = async () => {
@@ -20,18 +18,16 @@ const ProtectedRoutes = () => {
             }
             setSuccessAuth(true)
         }
+		authUser();
+	}, []);
 
-        authUser()
-    }, [])
+	if (successAuth === true) {
+		return <Outlet />;
+	} else if (successAuth === false) {
+		return <Navigate to="/login" />;
+	} else {
+		return <div>Loading...</div>;
+	}
+};
 
-    if (successAuth === true) {
-        return <Outlet/>
-    } else if (successAuth === false) {
-        return <Navigate to="/login"/>
-    } else {
-        return <div>Loading...</div>
-    }
-
-}
-
-export default ProtectedRoutes
+export default ProtectedRoutes;
