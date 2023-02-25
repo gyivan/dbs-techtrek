@@ -18,10 +18,10 @@ const Auth = () => {
         console.log(EmployeeID, Password)
 
         try {
-            const res = await axios.post('http://localhost:3000/api/auth', {EmployeeID, Password})
+            const res = await axios.post('http://localhost:3000/api/login', {EmployeeID, Password})
             const token = res.data.token
             window.localStorage.setItem('token', `bearer ${JSON.stringify(token)}`)
-            // Requires navigation to home page
+            console.log()
         } catch (err) {
             setAlert(err.response.data.message)
 
