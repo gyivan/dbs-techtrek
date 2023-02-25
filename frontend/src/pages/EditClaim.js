@@ -180,6 +180,17 @@ export default function EditClaim() {
 										/>
 									</Form.Group>
 								</Col>
+								<Col>
+									<Form.Group className="m-1">
+										<Form.Label>Follow Up</Form.Label>
+										<Form.Control
+											type="text"
+											defaultValue={claim.FollowUp === 0 ? "No" : "Yes"}
+											disabled
+											readOnly
+										/>
+									</Form.Group>
+								</Col>
 
 								<Col>
 									<Form.Group className="m-1">
