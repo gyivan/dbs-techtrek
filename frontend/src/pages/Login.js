@@ -1,120 +1,69 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-// import AuthService from "../services/auth.service";
-import Logo from "../assets/Logo.png";
-// import { useAuth } from "../contexts/authContext";
-import { Navigate } from "react-router-dom";
-const Login = () => {
-    let navigate = useNavigate();
-    // const auth = useAuth(); 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
+import Card from 'react-bootstrap/Card'
+import Background from '../assets/DBS_Image.jpeg'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import axios from 'axios'
+import {useState} from 'react'
+import Alert from 'react-bootstrap/Alert'
 
-    const onChangeUsername = (e) => {
-        const username = e.target.value;
-        setUsername(username);
-    };
+const Auth = () => {
 
-    const onChangePassword = (e) => {
-        const password = e.target.value;
-        setPassword(password);
-    };
+    const [alert, setAlert] = useState(null)
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+    const handleLogin = async (e) => {
+        e.preventDefault()
+        const EmployeeID = e.target.elements.EmployeeID.value
+        const Password = e.target.elements.Password.value
 
-    //     setMessage("");
-    //     setLoading(true);
+        console.log(EmployeeID, Password)
 
-    //    auth.login(username, password).then(
-    //         () => {
-    //             navigate("/");
-    //             // window.location.reload();
-    //         },
-    //         (error) => {
-    //             const resMessage =
-    //                 (error.response &&
-    //                     error.response.data &&
-    //                     error.response.data.message) ||
-    //                 error.message ||
-    //                 error.toString();
+        try {
+            const res = await axios.post('http://localhost:3000/api/login', {EmployeeID, Password})
+            const token = res.data.token
+            window.localStorage.setItem('token', `bearer ${JSON.stringify(token)}`)
+            console.log()
+        } catch (err) {
+            setAlert(err.response.data.message)
 
-    //             setLoading(false);
-    //             setMessage(resMessage);
-    //         }
-    //     );
-    };
+            setTimeout(() => {
+                setAlert(null)
+            }, 3000)
+        }
+        e.target.reset()
+    }
+        
 
     return (
-        <>
-        {/* {auth.user ? <Navigate replace to='/'/>
-        : */}
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-6"></div>
-                    <div className="col-lg-6">
-                        <div className="card card-container">
-                            <img
-                                src={Logo}
-                                alt="profile-img"
-                                className="profile-img-card"
-                            />
-
-                            <form onSubmit={handleLogin}>
-                                <div className="mb-3">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        name="username"
-                                        placeholder="Username"
-                                        value={username}
-                                        onChange={onChangeUsername}
-                                    />
-                                </div>
-
-                                <div className="mb-3">
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        name="password"
-                                        placeholder="Password"
-                                        value={password}
-                                        onChange={onChangePassword}
-                                    />
-                                </div>
-
-                                <div className="mb-3 d-grid">
-                                    <button
-                                        className="btn btn-primary"
-                                        disabled={loading}
-                                    >
-                                        {loading && (
-                                            <span className="spinner-border spinner-border-sm"></span>
-                                        )}
-                                        <span>Login</span>
-                                    </button>
-                                </div>
-
-                                {message && (
-                                    <div className="form-group">
-                                        <div
-                                            className="alert alert-danger"
-                                            role="alert"
-                                        >
-                                            {message}
-                                        </div>
-                                    </div>
-                                )}
-                            </form>
-                        </div>
-                    </div>
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+            <Card style={{display: "flex", width: "50rem", height: "30rem", border: "0", flexDirection: "row"}}>
+                <div style={{height: "100%", width: "50%", borderRadius: "10px 0px 0px 10px", backgroundImage: `url("${Background}")`, backgroundSize: "100% 100%"}}>
                 </div>
+                <div style={{display: "flex", flexDirection: "column", backgroundColor: "lightGrey", borderRadius: "0px 10px 10px 0px", height: "100%", width: "50%"}}>
+                {alert != null ? <Alert variant="danger" style={{margin: "10px 10px"}}> address</Alert> : ""}
+                <div  >
+                    <Card.Body style={{flex: ".65 .75 auto", paddingTop: "2rem"}}>
+                        <Form onSubmit={handleLogin}>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Employee ID</Form.Label>
+                                <Form.Control name="EmployeeID" type="number" placeholder="Enter Employee ID" required/>
+                                <Form.Text className="text-muted">
+                                We'll never share your ID with anyone else.
+                                </Form.Text>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control name="Password" type="password" placeholder="Password" required/>
+                            </Form.Group>
+                            <Button variant="danger" type="submit" style={{width: "100%", marginTop: "1rem"}}>
+                                Login
+                            </Button>
+                        </Form>
+                    </Card.Body>
+                </div> 
             </div>
-            {/* } */}
-        </>
-    );
-};
+            </Card>
+        </div>
+    )
+}
 
-export default Login;
+export default Auth
