@@ -51,21 +51,29 @@ export default function EditClaim() {
 
 		console.log("newClaim", newClaim);
 		// call api call
-		await axios.put("http://localhost:5000/edit-claim", newClaim).then((res) => {
+		await axios.put("http://localhost:5000/editClaim", 
+		{
+			"token":window.localStorage.getItem("token"),
+			"Amount": newClaim.Amount,
+			"Purpose": newClaim.Purpose,
+			"ClaimID": newClaim.ClaimID
+		}).then((res) => {
+			console.log(res)
 			if (res.status === 201) {
 				setVariant("success");
 				setAlertMessage("Claim successfully edited!");
 				setTimeout(() => {
 					setAlertMessage(null);
 				}, 3000);
-			} else {
-				setVariant("danger");
+				navigate(`/claims/${id}`);
+			} 
+		}).catch(function(error) {
+			setVariant("danger");
 				setAlertMessage("Error editing claim. Try Again!");
 				setTimeout(() => {
 					setAlertMessage(null);
 				}, 3000);
-			}
-		});
+		})
 	};
 
 	const onBack = () => {
@@ -88,6 +96,7 @@ export default function EditClaim() {
 			<div>
 				<h3 style={{ margin: 15 }}> Claim Details</h3>
 				<Container>
+				{alertMsg !== null ? <Alert styles={{margin: 20}}variant={variant}>{alertMsg}</Alert> : ""}
 					<Form onSubmit={onUpdate}>
 						<Form.Group controlId="editClaiomForm">
 							<Row>
@@ -250,7 +259,7 @@ export default function EditClaim() {
 							</Row>
 						</Form.Group>
 					</Form>
-					{alertMsg !== null ? <Alert variant={variant}>{alertMsg}</Alert> : ""}
+					
 				</Container>
 			</div>
 		</div>
