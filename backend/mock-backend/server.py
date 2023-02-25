@@ -67,7 +67,7 @@ def logout():
 
 #Register API call
 @app.route("/register", methods = ['POST'])
-def logout():
+def register():
     account = {
      "EmployeeID": request.json['EmployeeID'],
      "Password": request.json['Password'],
