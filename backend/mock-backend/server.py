@@ -20,7 +20,7 @@ def verify_password(username, password):
     return False
 
 #Login page
-@app.route("/login", methods = ['GET', 'POST'])
+@app.route("/login", methods = ['POST'])
 def login():
     response = make_response('')
 
@@ -41,7 +41,7 @@ def login():
 
 
 #Logout API call
-@app.route("/logout", methods = ['GET', 'POST'])
+@app.route("/logout", methods = ['POST'])
 def logout():
     response = make_response('')
 
@@ -66,24 +66,42 @@ def logout():
 
 
 #Register API call
-@app.route("/register", methods = ['GET', 'POST'])
+@app.route("/register", methods = ['POST'])
 def logout():
+    account = {
+     "EmployeeID": request.json['EmployeeID'],
+     "Password": request.json['Password'],
+     "FirstName": request.json['FirstName'],
+     "LastName": request.json['LastName'],
+     "Age": request.json['Age']
+    }
+    user.append(account)
     response = make_response('')
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+
 #Get All Policies API call
 @app.route("/getAllPolicies", methods = ['GET', 'POST'])
 def getAllPolicies():
-    response = make_response('')
+    res = []
+    #filter all policies owned by employee
+    for policy in insurancePolicies:
+        if policy["EmployeeID"] == request.json['EmployeeID']:
+            res.append(policy)
+    response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
 #Get One Policy API call
-@app.route("/getOnePolicy", methods = ['GET', 'POST'])
-def getOnePolicy():
-    response = make_response('')
+@app.route("/getOnePolicy/<id>", methods = ['GET', 'POST'])
+def getOnePolicy(id):
+    res = []
+    for policy in insurancePolicies:
+        if policy["InsuranceID"] == request.json['InsuranceID']:
+            res.append(policy)
+    response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
