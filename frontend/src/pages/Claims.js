@@ -37,6 +37,7 @@ function Claims() {
         ])
         
         const {id} = useParams()
+        
         const token = window.localStorage.getItem('token')
         const info = {id, token}
         
@@ -45,7 +46,7 @@ function Claims() {
             .then(response => {
             // Handle response
             if(response.ok){
-                setUser(response.data)
+                setUser(response.data.result.filter(res => res.InsuranceID === id))
             }
             })
             .catch(err => {
