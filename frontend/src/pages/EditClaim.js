@@ -7,6 +7,7 @@ import moment from "moment";
 export default function EditClaim() {
 	const navigate = useNavigate();
 	const [convertedDate, setConvertedDate] = useState("");
+	const [convertedEditDate, setConvertedEditDate] = useState();
 
 	const claim = {
 		ClaimID: 2010,
@@ -58,6 +59,7 @@ export default function EditClaim() {
 
 	useEffect(() => {
 		setConvertedDate(moment(claim.ExpenseDate).utc().format("YYYY-MM-DD"));
+		setConvertedEditDate(moment(claim.LastEditedClaimDate).utc().format("DD-MM-YYYY"));
 	}, []);
 	return (
 		<div style={{}}>
@@ -129,6 +131,7 @@ export default function EditClaim() {
 												type="date"
 												value={convertedDate}
 												onChange={onDateChange}
+												required
 											></input>
 											{/* <Form.Control
 											type="date"
@@ -147,6 +150,7 @@ export default function EditClaim() {
 											type="text"
 											defaultValue={claim.Amount}
 											name="amount"
+											required
 										/>
 									</Form.Group>
 								</Col>
@@ -160,6 +164,7 @@ export default function EditClaim() {
 										rows={3}
 										defaultValue={claim.Purpose}
 										name="purpose"
+										required
 									/>
 								</Form.Group>
 							</Row>
@@ -197,7 +202,7 @@ export default function EditClaim() {
 										<Form.Label>Last Edited Claim Date</Form.Label>
 										<Form.Control
 											type="text"
-											defaultValue={claim.LastEditedClaimDate}
+											defaultValue={convertedEditDate}
 											disabled
 											readOnly
 										/>
