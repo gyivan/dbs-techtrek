@@ -1,7 +1,6 @@
 import React from 'react'
 import { format } from 'date-fns'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import EditClaim from '../pages/EditClaim'
 import { Link } from 'react-router-dom'
 
 function Userclaim({user}) {
@@ -13,7 +12,7 @@ function Userclaim({user}) {
         </div>
         <div className="user-purpose">
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>UserAmount:</span>${user.Amount}</p>
-            <p><span style={{fontWeight:600, paddingRight:"5px"}}>ExpenseDate:</span>format(new Date(user.ExpenseDate), 'dd/MM/yyyy')}</p>
+            <p><span style={{fontWeight:600, paddingRight:"5px"}}>ExpenseDate:</span>{format(new Date(user.ExpenseDate), 'dd/MM/yyyy')}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>Purpose:</span>{user.Purpose}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>FollowUp:</span>{user.FollowUp}</p>
             <p><span style={{fontWeight:600, paddingRight:"5px"}}>Last Update:</span>{formatDistanceToNow(new Date(user.LastEditedClaimDate), {addSuffix: true})}</p>
