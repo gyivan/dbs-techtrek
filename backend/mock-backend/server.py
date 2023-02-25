@@ -99,7 +99,7 @@ def getAllPolicies():
 def getOnePolicy(id):
     res = []
     for policy in insurancePolicies:
-        if policy["InsuranceID"] == request.json['InsuranceID']:
+        if (policy["InsuranceID"] == request.json['InsuranceID']) and (policy["EmployeeID"] == request.json['EmployeeID']):
             res.append(policy)
     response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -109,7 +109,11 @@ def getOnePolicy(id):
 #getPendingClaims
 @app.route("/getPendingClaims", methods = ['GET', 'POST'])
 def getPendingClaims():
-    response = make_response('')
+    res = []
+    for claim in insuranceClaims:
+        if claim["Status"] == "Pending":
+            res.append(claim)
+    response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -117,7 +121,11 @@ def getPendingClaims():
 #getApprovedClaims 
 @app.route("/getApprovedClaims", methods = ['GET', 'POST'])
 def getApprovedClaims():
-    response = make_response('')
+    res = []
+    for claim in insuranceClaims:
+        if claim["Status"] == "Approved":
+            res.append(claim)
+    response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -125,7 +133,11 @@ def getApprovedClaims():
 #getRejectedClaims
 @app.route("/getRejectedClaims", methods = ['GET', 'POST'])
 def getRejectedClaims():
-    response = make_response('')
+    res = []
+    for claim in insuranceClaims:
+        if claim["Status"] == "Rejected":
+            res.append(claim)
+    response = jsonify(res)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
