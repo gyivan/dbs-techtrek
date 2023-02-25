@@ -1,6 +1,8 @@
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Layout from "./layout/Layout";
 import Login from "./pages/Login";
+import CreateClaim from "./pages/CreateClaim";
+
 import {
 	createBrowserRouter,
 	createRoutesFromElements,
@@ -20,6 +22,7 @@ const router = createBrowserRouter(
 					<Route path="/" element={<div><InsurancePolicies></InsurancePolicies></div>} />
                     <Route path="/claim" element={<Claims />} />
 					<Route path="/edit-claim/:id" element={<EditClaim />} />
+                    <Route path="/create-claim/:id" element={<CreateClaim />} />
 				</Route>
 			</Route>
 		</Route>
