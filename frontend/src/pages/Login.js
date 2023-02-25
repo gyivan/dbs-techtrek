@@ -5,8 +5,11 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import {useState} from 'react'
 import Alert from 'react-bootstrap/Alert'
+import { useNavigate } from 'react-router-dom'
 
 const Auth = () => {
+
+    const navigate = useNavigate()
 
     const [alert, setAlert] = useState(null)
 
@@ -18,10 +21,10 @@ const Auth = () => {
         console.log(EmployeeID, Password)
 
         try {
-            const res = await axios.post('http://localhost:3000/api/login', {EmployeeID, Password})
+            const res = await axios.post('http://localhost:5000/auth/login', {EmployeeID, Password})
             const token = res.data.token
-            window.localStorage.setItem('token', `bearer ${JSON.stringify(token)}`)
-            console.log()
+            window.localStorage.setItem('token', `${JSON.stringify(token)}`)
+            navigate('/')
         } catch (err) {
             setAlert(err.response.data.message)
 
