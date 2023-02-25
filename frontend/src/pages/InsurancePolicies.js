@@ -1,15 +1,17 @@
 import React, { useState} from "react";
 import { Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
+
 
 // const InsurancePolicy = () => {
-//   const [insuranceData, setInsuranceData] = useState([]);
+//   const [policies, setInsuranceData] = useState([]);
 
 // }
 
 
 //   useEffect(() => {  
-//     fetch("InsurancePolicies.json")
+//     fetch("")
 //       .then((res) => res.json())
 //       .then((data) => {
 //         setInsuranceData(data);
@@ -145,7 +147,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 
- 
+
 
 
 
@@ -153,10 +155,11 @@ const InsurancePolicies = () => {
 
     const [InsID, setInsID] = useState(null)
 
-    
+    const ApprovedID = localStorage.getItem('EmployeeID');
+
     const Navigate = useNavigate()
     
-    const handleClick = (data) => Navigate(`/${data.InsuranceID}`);        
+    const handleClick = (data) => Navigate(`/claims/${data.InsuranceID}`);        
 
     return (
         <div className="container">
@@ -175,20 +178,26 @@ const InsurancePolicies = () => {
             </tr>
             </thead>
             <tbody>
-            {policies.map((data) => (
 
-                <tr key={data.InsuranceID}>
-                <td>{data.InsuranceID}</td>
-                <td>{data.EmployeeID}</td>
-                <td>{data["Insurance Type"]}</td>
-                <td>{data.PolicyStartDate}</td>
-                <td>{data.PolicyTerm}</td>
-                <td>{data.PolicyEndDate}</td>
-                <td>{data.ClaimLimit}</td>
-                <td>{data.RemainingClaimLimit}</td>
-                <button onClick = {() => handleClick(data)}>Claim under {data.InsuranceID}</button>
-                </tr>
-            ))}
+            
+            {/* {policies.filter(function(item){return item.EmployeeID === ApprovedID}).map((data) => ( */}
+            {policies.map((data) => (
+                
+
+                
+                
+                    <tr key={data.InsuranceID}>
+                    <td>{data.InsuranceID}</td>
+                    <td>{data.EmployeeID}</td>
+                    <td>{data["Insurance Type"]}</td>
+                    <td>{moment.utc(data.PolicyStartDate).format('MM/DD/YYYY')}</td>
+                    <td>{data.PolicyTerm}</td>
+                    <td>{moment.utc(data.PolicyEndDate).format('MM/DD/YYYY')}</td>
+                    <td>{data.ClaimLimit}</td>
+                    <td>{data.RemainingClaimLimit}</td>
+                    <button onClick = {() => handleClick(data)}>Claim under {data.InsuranceID}</button>
+                    </tr>
+                ))}
             </tbody>
         </Table>
         </div>
@@ -196,3 +205,4 @@ const InsurancePolicies = () => {
 };
 
 export default InsurancePolicies;
+
