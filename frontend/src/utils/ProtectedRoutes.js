@@ -8,13 +8,14 @@ const ProtectedRoutes = () => {
         
         const authUser = async () => {
             const token = window.localStorage.getItem('token')
-            if (token != null) {
-                const parsedToken = JSON?.parse(token)
-                const config = {headers: {Authorization: `bearer ${parsedToken}`}}
-                if (parsedToken) {
-                    await axios.post('http://localhost:5000/api/auth', {}, config)
-                    setSuccessAuth(true)
-                }
+            if (token == null) {
+                // const parsedToken = JSON?.parse(token)
+                // const config = {headers: {Authorization: `bearer ${parsedToken}`}}
+                // if (parsedToken) {
+                //     await axios.post('http://localhost:5000/api/auth', {}, config)
+                //     setSuccessAuth(true)
+                // }
+                setSuccessAuth(false)
             }
             setSuccessAuth(true)
         }
