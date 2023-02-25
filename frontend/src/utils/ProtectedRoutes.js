@@ -18,7 +18,7 @@ const ProtectedRoutes = () => {
                     setSuccessAuth(true)
                 }
             }
-            setSuccessAuth(false)
+            setSuccessAuth(true)
         }
 
         authUser()

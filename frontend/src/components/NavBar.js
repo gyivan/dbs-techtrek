@@ -6,30 +6,41 @@ import { LinkContainer } from 'react-router-bootstrap'
 const NavBar = () => {
 
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-          <Container>
-            <LinkContainer to="/">
-                <Navbar.Brand>React-Bootstrap</Navbar.Brand>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Container>
+          <LinkContainer to="/">
+            <Navbar.Brand>SBD Bank</Navbar.Brand>
+          </LinkContainer>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="me-auto">
+              <LinkContainer to="/view-accounts">
+                <Nav.Link>View Accounts</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/make-transactions">
+                <Nav.Link>Make Transactions</Nav.Link>
+              </LinkContainer>
+              {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">
+                  Another action
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">
+                  Separated link
+                </NavDropdown.Item>
+              </NavDropdown> */}
+            </Nav>
+            <Nav>
+            <LinkContainer to="/" onClick={logout}>
+              <Nav.Link>Log Out</Nav.Link>
             </LinkContainer>
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav style={{margin: "0 auto"}}>
-                <LinkContainer to="/shop">
-                    <Nav.Link>Shop</Nav.Link>
-                </LinkContainer>
-              </Nav>
-              <Nav>
-                <LinkContainer to="/cart">
-                    <Nav.Link>Cart</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to="/login">
-                    <Nav.Link>Logout</Nav.Link>
-                </LinkContainer>
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      );
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+  );
 }
 
 
