@@ -5,13 +5,13 @@ import moment from 'moment'
 
 
 // const InsurancePolicy = () => {
-//   const [insuranceData, setInsuranceData] = useState([]);
+//   const [policies, setInsuranceData] = useState([]);
 
 // }
 
 
 //   useEffect(() => {  
-//     fetch("InsurancePolicies.json")
+//     fetch("")
 //       .then((res) => res.json())
 //       .then((data) => {
 //         setInsuranceData(data);
@@ -159,7 +159,7 @@ const InsurancePolicies = () => {
 
     const Navigate = useNavigate()
     
-    const handleClick = (data) => Navigate(`/${data.InsuranceID}`);        
+    const handleClick = (data) => Navigate(`/claims/${data.InsuranceID}`);        
 
     return (
         <div className="container">
