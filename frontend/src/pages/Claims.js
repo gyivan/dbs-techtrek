@@ -51,20 +51,25 @@ function Claims() {
     <h2 className="mb-3" style={{textAlign:"center"}}>My claims</h2>
     <Tabs style={{display:"flex", justifyContent:"center"}} activeKey={tabKey} onSelect={(e) => initTabKey(e)}>
       <Tab eventKey="one" title="Pending">
-        <p>{user.Status === "Pending" && <Userclaim user={user} /> }</p>
+        {user.map((user, index)=>(
+                <div key={user.ClaimID}>
+                    {user.Status === "Pending" && <Userclaim user={user} /> }
+                </div>      
+            ))}
       </Tab>
       <Tab eventKey="two" title="Approved">
-        {user.map(user=>(
-            <>
-            <p>{ user.Status === "Approved" && <Userclaim user={user} /> }</p>
-            </>      
+        {user.map((user)=>(
+            <div key={user.ClaimID}>
+                { user.Status === "Approved" && <Userclaim user={user} /> }
+            </div>
+     
         ))}
       </Tab>
       <Tab eventKey="four" title="Rejected">
-        {user.map(user=>(
-            <>
-            <p>{ user.Status === "Rejected" && <Userclaim user={user} /> }</p>
-            </>      
+        {user.map((user)=>(
+            <div key={user.ClaimID}>
+                { user.Status === "Rejected" && <Userclaim user={user} /> }
+            </div>      
         ))}
       </Tab>
     </Tabs>
