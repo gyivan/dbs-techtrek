@@ -6,6 +6,7 @@ import os;
 
 #--------AUTH----------------------------
 from routes.authRoute import authRoute; 
+from routes.editClaimRoute import editClaimRoute; 
 
 
 # <REMOVE THE WHEN USING THIS AS A TEMPLATE>---------------------------------------------------------
@@ -38,6 +39,7 @@ def healthCheck():
 
 # <AUTH ROUTE>-------------------------------------------------------------------------------------------------------------------
 application.register_blueprint(authRoute, url_prefix='/auth')
+application.register_blueprint(editClaimRoute, url_prefix='/')
 
 
 # <REMOVE THE WHEN USING THIS AS A TEMPLATE>----------------------------------------------------------------------
